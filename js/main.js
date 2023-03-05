@@ -112,9 +112,6 @@ console.log('Live server test.');
 
             // gameStart() function:
             function gameStart() {
-                /* --REMOVE ON FINAL VERSION-- Game start tests and logs: */
-                console.log('Before timeout was intended to occur.');
-                console.log(crdGridVis);
                 setTimeout(() => {
                     // Sets all of the cards on the grid to face-down:
                     crdGridVis = [
@@ -133,9 +130,6 @@ console.log('Live server test.');
                         /* --NOT IMPLEMENTED AT THIS TIME-- */
                     // Re-renders game state while cards are face down:
                     render();
-                    /* --REMOVE ON FINAL VERSION-- Game start tests and logs: */
-                    console.log('After timeout was intended to occur.');
-                    console.log(crdGridVis);
                 }, 3000);
             }
             
@@ -158,7 +152,6 @@ console.log('Live server test.');
             render();
             // Calls game start function to start the game:
             gameStart();
-            
         }
 
     // Initialization: 
