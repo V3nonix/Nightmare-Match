@@ -40,12 +40,14 @@ console.log('Live server test.');
 
     /*----- Cached elements  -----*/
     // Card grid elements:
+    const crdEls = [...document.querySelectorAll('#card-grid > div')];
     // Restart button:
     // Timer element:
     // (Stretch goal) Animated element(s):
 
     /*----- Event listeners -----*/
     // Card grid elements event listener:
+    document.getElementById('card-grid').addEventListener('click',hdlClick);
     // Restart button event listener:
     // Timer element event listener:
 
@@ -54,7 +56,7 @@ console.log('Live server test.');
     // Initialization functions:
 
         /* init() auxiliary functions. */
-        function bttrRandom() {
+        function bttrRandom(n) {
             // Create a better random function so that there are less matches placed in a row.
         }
 
@@ -115,10 +117,10 @@ console.log('Live server test.');
                 setTimeout(() => {
                     // Sets all of the cards on the grid to face-down:
                     crdGridVis = [
+                        [0,0,0,0,0,0],  // <---[Row 0]
                         [0,0,0,0,0,0],  // <---[Row 1]
                         [0,0,0,0,0,0],  // <---[Row 2]
                         [0,0,0,0,0,0],  // <---[Row 3]
-                        [0,0,0,0,0,0],  // <---[Row 4]
                     ];
                     // Set remaining guesses to max guesses:
                     remGuess = MAX_GUESS;
@@ -132,17 +134,22 @@ console.log('Live server test.');
                     render();
                 }, 3000);
             }
-            
+
+            // crdReset() function:
+            function crdReset() {
+                
+            }
+
         /* init() function. */
         function init() {
             // Sets the card grid to a random placement of 24 cards containing 12 matches:
             crdGrid = crdRandomizer();
             // Starts all of the cards on the grid to face-up:
             crdGridVis = [
+                [1,1,1,1,1,1],  // <---[Row 0]
                 [1,1,1,1,1,1],  // <---[Row 1]
                 [1,1,1,1,1,1],  // <---[Row 2]
                 [1,1,1,1,1,1],  // <---[Row 3]
-                [1,1,1,1,1,1],  // <---[Row 4]
             ];
             // Sets results to null:
             rslt = null;
@@ -162,6 +169,15 @@ console.log('Live server test.');
         console.log(crdGrid);
 
     // State Change functions:
+
+        /* hdlClick() function. */
+        function hdlClick(evt) {
+            let idArr = [...evt.target.id];
+            let rowIdx = idArr[3];
+            let colIdx = idArr[1];
+            
+            console.log (`Row: ${rowIdx} Column: ${colIdx}`);
+        }
 
     // State Check functions:
 

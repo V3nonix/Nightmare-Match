@@ -1,2 +1,29 @@
 /* style.css */
 
+:root {
+    --color-border: rgb(210, 160, 120);
+    --color-bg: white;
+    --color-txt: rgb(160, 110, 60);
+    --color-aux: rgb(160, 120, 70);
+    --color-accent: rgb(210, 180, 140);
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#card-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 15vmin);
+    grid-template-rows: repeat(4, 15vmin);
+    gap: 1vmin;
+}
+
+#card-grid > div {
+    border: 0.1vmin solid var(--color-border);
+}
