@@ -36,6 +36,8 @@ console.log('Live server test.');
     let rslt;
     // Boolean which stores if game has started yet.
     let didGmStrt;
+    // Cached HTML element that is the active card or active card status.
+    let actvCrd;
   
 
     /*----- Cached elements  -----*/
@@ -43,6 +45,7 @@ console.log('Live server test.');
     const crdEls = [...document.querySelectorAll('#card-grid > div')];
     // Restart button:
     // Timer element:
+    // Message element:
     // (Stretch goal) Animated element(s):
 
     /*----- Event listeners -----*/
@@ -128,7 +131,7 @@ console.log('Live server test.');
                     timer();
                     // Sets game start variable to true:
                     didGmStrt = true;
-                    // Set message text to "GAME START!" :
+                    // Set message element's text to "GAME START!" :
                         /* --NOT IMPLEMENTED AT THIS TIME-- */
                     // Re-renders game state while cards are face down:
                     render();
@@ -142,6 +145,10 @@ console.log('Live server test.');
 
         /* init() function. */
         function init() {
+            // Sets the active card to 0 to show that there is no active card:
+            actvCrd = 0;
+            // Sets the variable which tracks if the game has started to false:
+            didGmStrt = false;
             // Sets the card grid to a random placement of 24 cards containing 12 matches:
             crdGrid = crdRandomizer();
             // Starts all of the cards on the grid to face-up:
@@ -170,21 +177,96 @@ console.log('Live server test.');
 
     // State Change functions:
 
+        /* hdlClick() helper functions. */
+        function checkMatch(crdTyp,rowIdx,colIdx) {
+            // Creates an array of the active card's id string:
+            actvIdArr = [...actvCrd.id];
+            // Sets the active row index equal to that contained in the id:
+            actvRowIdx = +actvIdArr[3];
+            // Sets the active column index equal to that contained in the id:
+            actvColIdx = +actvIdArr[1];
+            // Finds the active card's type using the index values and stores it in this variable:
+            actvCrdTyp = crdGrid[actvRowIdx][actvColIdx];
+            // Sets the active card to 1 signifying that the active card is being compared.
+            actvCrd = 1;
+            /* Sets the active card to face-up: */
+            crdGridVis[actvRowIdx].splice(actvColIdx,1,1);
+
+             /* --REMOVE ON FINAL VERSION-- Active card index, type and visibility: */
+             console.log(`Row: ${actvRowIdx} | Column: ${actvColIdx} | Card Visibility: ${crdGridVis[actvRowIdx][actvColIdx]} | Card Type: ${actvCrdTyp}`);
+
+            if (actvCrdTyp === crdTyp) {
+                /* Sets the active card to 0 signifying that there are no active cards: */
+                actvCrd = 0;
+                /* Sets message element's text to "MATCH!": */
+                    /* --NOT IMPLEMENTED AT THIS TIME-- */
+
+                /* --REMOVE ON FINAL VERSION-- Match console log: */
+                console.log('Match!');
+            } else {
+                /* Subtracts 1 from remaining guesses: */
+                remGuess -= 1;
+                /* Sets message element's text to "Incorrect. Guess again.": */
+                    /* --NOT IMPLEMENTED AT THIS TIME-- */
+
+                /* --REMOVE ON FINAL VERSION-- Match console log: */
+                console.log('No Match!');
+
+                setTimeout(() => {
+                    // Sets the active card to 0 signifying that there are no active cards:
+                    actvCrd = 0;
+                    // Sets the active card face-down:
+                    crdGridVis[actvRowIdx].splice(actvColIdx,1,0);
+                    // Sets the selected card face-down:
+                    crdGridVis[rowIdx].splice(colIdx,1,0);
+                }, 2000);
+            }
+        }
+
         /* hdlClick() function. */
         function hdlClick(evt) {
-            let idArr = [...evt.target.id];
-            let rowIdx = idArr[3];
-            let colIdx = idArr[1];
-            
-            console.log (`Row: ${rowIdx} Column: ${colIdx}`);
+            if (evt.target.id !== 'card-grid' && didGmStrt === true) {
+                // Creates an array of the event target's id string:
+                let idArr = [...evt.target.id];
+                // Sets the row index equal to that contained in the id:
+                let rowIdx = +idArr[3];
+                // Sets the column index equal to that contained in the id:
+                let colIdx = +idArr[1];
+                // Finds if the card is visible using the index values and stores it in this variable:
+                let crdVis = crdGridVis[rowIdx][colIdx];
+                // Finds the card type using the index values and stores it in this variable:
+                let crdTyp = crdGrid[rowIdx][colIdx];
+                
+                /* --REMOVE ON FINAL VERSION-- Event target index, type, and visibility: */
+                console.log(`Row: ${rowIdx} | Column: ${colIdx} | Card Visibility: ${crdVis} | Card Type: ${crdTyp}`);
+
+                // Determines the outcome of the event: 
+                if (actvCrd === 1) {
+                    /* Returns because there is already an active card being compared: */
+                    return;
+                } else if (actvCrd === evt.target) {
+                    /* Returns because the active card cannot be compared with itself: */
+                    return;
+                } else if (actvCrd === 0) {
+                    if (crdVis === 1) {
+                        // Returns because the selected card is already face-up:
+                        return;
+                    } else {
+                        // Sets the selected card to face-up:
+                        crdGridVis[rowIdx].splice(colIdx,1,1);
+                        // Sets the selected card to the active card:
+                        actvCrd = evt.target;
+                    }
+                } else {
+                    checkMatch(crdTyp,rowIdx,colIdx);
+                }
+                winCheck();
+            }
         }
 
     // State Check functions:
 
         /* winCheck() auxiliary function. */
-        function checkMatch() {
-
-        }
 
         /* winCheck() helper functions. */
 
