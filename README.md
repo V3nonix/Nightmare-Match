@@ -1,1 +1,6 @@
 # SEI-Project1-MemoryMatch
+
+    This is a memory match game. In the MVP version, the player will have a maximum number of guesses and a countdown timer. There will be twenty-four cards, six in four rows, with twelve matching pairs. These cards will start face-up, and will stay that way for three seconds, after which, they will be set face-down. 
+  When a card is clicked on, one of three things will happen. One: In the event that there are no other selected cards, the selected card will be shown face-up, setting it to active. In the event that a card is already active, the selected card will be compared to the active card and shown face-up for 2 seconds, resulting in one of the two other outcomes. Two: If the active and selected card match, both will be set face-up for the remainder of the game. Three: If they do not match, both cards will be set face down and the player will lose one of the maximum guesses. 
+  The player will have two minutes and thirty seconds to match all cards. Upon the countdown's completion, if all cards have not been matched, the player will lose. If the player uses all of there maximum guesses and all cards have not been matched, the player will lose. Otherwise, the player wins. 
+  Once a player wins, a button will appear, giving the player the option to reset the game, and play again.
