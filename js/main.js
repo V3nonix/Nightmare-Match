@@ -112,6 +112,7 @@ console.log('Live server test.');
                         arrCrdRes.push(val)
                     };
                 }
+                /* Uses this helper function to split original array into four arrays for each row then returns result: */
                 return spliceToFourRows(arrCrdRes)
             }
 
@@ -140,11 +141,16 @@ console.log('Live server test.');
 
             // crdReset() function:
             function crdReset() {
-                
+                crdEls.forEach(crd => {
+                    // Removes all classes on a given card:
+                    crd.className='';
+                });
             }
 
         /* init() function. */
         function init() {
+            // Resets the cards:
+            crdReset();
             // Sets the active card to 0 to show that there is no active card:
             actvCrd = 0;
             // Sets the variable which tracks if the game has started to false:
@@ -189,12 +195,11 @@ console.log('Live server test.');
             actvCrdTyp = crdGrid[actvRowIdx][actvColIdx];
             // Sets the active card to 1 signifying that the active card is being compared.
             actvCrd = 1;
-            /* Sets the active card to face-up: */
-            crdGridVis[actvRowIdx].splice(actvColIdx,1,1);
-
-             /* --REMOVE ON FINAL VERSION-- Active card index, type and visibility: */
-             console.log(`Row: ${actvRowIdx} | Column: ${actvColIdx} | Card Visibility: ${crdGridVis[actvRowIdx][actvColIdx]} | Card Type: ${actvCrdTyp}`);
-
+            // Sets the active card to face-up: 
+            crdGridVis[rowIdx].splice(colIdx,1,1);
+            // Re-renders the card grid:
+            renderCrdGrid();
+            // Determines if active and selected card match:
             if (actvCrdTyp === crdTyp) {
                 /* Sets the active card to 0 signifying that there are no active cards: */
                 actvCrd = 0;
@@ -219,8 +224,13 @@ console.log('Live server test.');
                     crdGridVis[actvRowIdx].splice(actvColIdx,1,0);
                     // Sets the selected card face-down:
                     crdGridVis[rowIdx].splice(colIdx,1,0);
-                }, 2000);
+                    // Re-renders the card grid:
+                    renderCrdGrid();
+                }, 1500);
             }
+
+            /* --REMOVE ON FINAL VERSION-- Active card index, type and visibility: */
+            console.log(`Row: ${actvRowIdx} | Column: ${actvColIdx} | Card Visibility: ${crdGridVis[actvRowIdx][actvColIdx]} | Card Type: ${actvCrdTyp}`);
         }
 
         /* hdlClick() function. */
@@ -236,10 +246,6 @@ console.log('Live server test.');
                 let crdVis = crdGridVis[rowIdx][colIdx];
                 // Finds the card type using the index values and stores it in this variable:
                 let crdTyp = crdGrid[rowIdx][colIdx];
-                
-                /* --REMOVE ON FINAL VERSION-- Event target index, type, and visibility: */
-                console.log(`Row: ${rowIdx} | Column: ${colIdx} | Card Visibility: ${crdVis} | Card Type: ${crdTyp}`);
-
                 // Determines the outcome of the event: 
                 if (actvCrd === 1) {
                     /* Returns because there is already an active card being compared: */
@@ -256,11 +262,16 @@ console.log('Live server test.');
                         crdGridVis[rowIdx].splice(colIdx,1,1);
                         // Sets the selected card to the active card:
                         actvCrd = evt.target;
+                        // Re-renders the card grid:
+                        renderCrdGrid();
                     }
                 } else {
                     checkMatch(crdTyp,rowIdx,colIdx);
                 }
                 winCheck();
+
+                /* --REMOVE ON FINAL VERSION-- Event target index, type, and visibility: */
+                console.log(`Row: ${rowIdx} | Column: ${colIdx} | Card Visibility: ${crdVis} | Card Type: ${crdTyp}`);
             }
         }
 
@@ -290,7 +301,32 @@ console.log('Live server test.');
 
         /* render() helper functions. */
         function renderCrdGrid() {
-
+            crdEls.forEach(crd => {
+                // Creates an array of the cards's id string:
+                let idArr = [...crd.id];
+                // Sets the row index equal to that contained in the id:
+                let rowIdx = +idArr[3];
+                // Sets the column index equal to that contained in the id:
+                let colIdx = +idArr[1];
+                // Finds if the card is visible using the index values and stores it in this variable:
+                let crdVis = crdGridVis[rowIdx][colIdx];
+                // Finds the card type using the index values and stores it in this variable:
+                let crdTyp = crdGrid[rowIdx][colIdx];
+                // Determines how to render depending on if the game has started:
+                if (!didGmStrt) {
+                    /* Adds a class to the card that is equal to the card type: */
+                    crd.classList.add(crdTyp);
+                } else {
+                    /* Determines the card's visibility: */
+                    if (crdVis && crd.classList.contains('not-vis')) {
+                        // Removes the not visible card class:
+                        crd.classList.remove('not-vis');
+                    } else if (!crdVis && !crd.classList.contains('not-vis')) {
+                        // Adds the not visible card class:
+                        crd.classList.add('not-vis');
+                    }
+                }
+            })
         }
 
         function renderMsg() {

@@ -27,3 +27,61 @@ body {
 #card-grid > div {
     border: 0.1vmin solid var(--color-border);
 }
+
+
+/* Card type classes: */
+
+.a {
+    background-color: red;
+}
+
+.b {
+    background-color: rgb(255, 106, 0);
+}
+
+.c {
+    background-color: orange;
+}
+
+.d {
+    background-color: yellow;
+}
+
+.e {
+    background-color: yellowgreen;
+}
+
+.f {
+    background-color: green;
+}
+
+.g {
+    background-color: cadetblue;
+}
+
+.h {
+    background-color: blue;
+}
+
+.i {
+    background-color: blueviolet;
+}
+
+.j {
+    background-color: purple;
+}
+
+.k {
+    background-color: indigo;
+}
+
+.l {
+    background-color: black;
+}
+
+/* Card visibility classes: */
+
+.not-vis {
+    background-color: antiquewhite;
+}
+
