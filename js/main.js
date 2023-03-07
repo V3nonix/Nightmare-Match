@@ -44,6 +44,8 @@ console.log('Live server test.');
         let remTime;
         // Is the interval id.
         let tmrInt;
+        // Number which stores score.
+        let score;
 
     /*----- Cached elements  -----*/
         // Card grid elements:
@@ -56,6 +58,8 @@ console.log('Live server test.');
         const msgEl = document.querySelector('h1');
         // Remaining guesses element:
         const remGuessEl = document.getElementById('guess-txt');
+        // Display elements:
+        const disEl = document.getElementById('display-els');
         // (Stretch goal) Animated element(s):
 
     /*----- Event listeners -----*/
@@ -141,6 +145,8 @@ console.log('Live server test.');
                     ];
                     // Set remaining guesses to max guesses:
                     remGuess = MAX_GUESS;
+                    // Sets score to 0:
+                    score = 0;
                     // Sets game start variable to true:
                     didGmStrt = true;
                     // Sets timer:
@@ -302,17 +308,26 @@ console.log('Live server test.');
     
         /* winCheck() helper functions. */
         function onWin() {
+            // Gets the current score:
+            getScore();
             // Re-renders the entire game:
             render();
             // Sets message element's text to "YOU WIN!" : 
             msgEl.innerText = 'YOU WIN!';
         }
 
+            // winCheck() helper functions.
+            function getScore() {
+                /* Updates score: */
+                score = remTime*remGuess;
+            }
+
         /* winCheck() function. */
         function winCheck() {
             // If the player has won, onWin() will be called:
             if (grdCheck()) {
                 onWin();
+                clearInterval(tmrInt);
             // If the player has lost, onLoss() will be called:
             } else if (lossCheck()) {
                 onLose();
@@ -407,21 +422,39 @@ console.log('Live server test.');
             remGuessEl.innerText = ` ${remGuess} guesses.`
         }
 
-        function renderTmr() {
+        function renderDis() {
+            let disEls = [...disEl.children];
             if (didGmStrt) {
-                // Makes the timer elements visible:
-                document.getElementById('timer-els').style.visibility = 'visible';
+                // Makes the display elements visible except for score:
+                disEl.style.visibility = 'visible';
+                disEls.forEach (el => {
+                    if (el.id === 'score') {
+                        el.style.display = 'none'
+                    } else {
+                        el.style.display = 'inline-block';
+                    }
+                }) 
             } else if (!didGmStrt) {
-                // Makes the timer elements hidden:
-                document.getElementById('timer-els').style.visibility = 'hidden';
+                // Makes the display elements hidden:
+                disEl.style.visibility = 'hidden';
+            } 
+            if (score !== 0) {
+                disEls.forEach (el => {
+                    if (el.id === 'score') {
+                        el.style.display = 'inline-block'
+                        document.querySelector('#score-txt').innerText = ` ${score} points!`
+                    } else {
+                        el.style.display = 'none';
+                    }
+                }); 
             }
         }
-
+        
         /* render() function. */
         function render() {
             renderCrdGrid();
             renderCtrls();
-            renderTmr();
+            renderDis();
             renderAtmps();
         }
 

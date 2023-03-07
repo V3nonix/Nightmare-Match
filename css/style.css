@@ -31,14 +31,14 @@ h1 {
     display: none;
 }
 
-#timer-els {
+#display-els {
     display: flex;
     margin: 1vmin;
     visibility: hidden;
 
 }
 
-#timer-els > p {
+#display-els > p {
     margin: 3vmin;
 }
 
