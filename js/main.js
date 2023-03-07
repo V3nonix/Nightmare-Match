@@ -46,9 +46,12 @@ console.log('Live server test.');
     // Restart button:
     // Timer element:
     // Message element:
+    const msgEl = document.querySelector('h1');
     // (Stretch goal) Animated element(s):
 
     /*----- Event listeners -----*/
+    // Start button event listener:
+    document.getElementById('start').addEventListener('click',strt);
     // Card grid elements event listener:
     document.getElementById('card-grid').addEventListener('click',hdlClick);
     // Restart button event listener:
@@ -133,7 +136,7 @@ console.log('Live server test.');
                     // Sets game start variable to true:
                     didGmStrt = true;
                     // Set message element's text to "GAME START!" :
-                        /* --NOT IMPLEMENTED AT THIS TIME-- */
+                    msgEl.innerText = 'GAME START!';
                     // Re-renders game state while cards are face down:
                     render();
                 }, 3000);
@@ -170,16 +173,25 @@ console.log('Live server test.');
             remGuess = 'locked';
             // Renders game state while cards are face-up:
             render();
+            // Set message element's text to "You have 3 seconds to memorize." :
+            msgEl.innerText = 'You have 3 seconds to memorize.';
             // Calls game start function to start the game:
             gameStart();
         }
 
     // Initialization: 
-
-    init();
+    
+    function strt(evt) {
+        /* Hides the start button: */
+        evt.target.style.visibility = 'hidden';
+        /* Initializes game after start is pressed: */
+        init();
 
         /* --REMOVE ON FINAL VERSION-- After-initialization tests and logs: */
         console.log(crdGrid);
+    }
+
+
 
     // State Change functions:
 
@@ -204,7 +216,7 @@ console.log('Live server test.');
                 /* Sets the active card to 0 signifying that there are no active cards: */
                 actvCrd = 0;
                 /* Sets message element's text to "MATCH!": */
-                    /* --NOT IMPLEMENTED AT THIS TIME-- */
+                msgEl.innerText = 'MATCH!';
 
                 /* --REMOVE ON FINAL VERSION-- Match console log: */
                 console.log('Match!');
@@ -212,7 +224,7 @@ console.log('Live server test.');
                 /* Subtracts 1 from remaining guesses: */
                 remGuess -= 1;
                 /* Sets message element's text to "Incorrect. Guess again.": */
-                    /* --NOT IMPLEMENTED AT THIS TIME-- */
+                msgEl.innerText = 'Incorrect. Guess again.';
 
                 /* --REMOVE ON FINAL VERSION-- Match console log: */
                 console.log('No Match!');
@@ -330,7 +342,7 @@ console.log('Live server test.');
         }
 
         function renderMsg() {
-
+        
         }
 
         function renderCtrls() {
