@@ -25,7 +25,7 @@ console.log('Live server test.');
         // Contains the max number of guess attempts available to the player:
         const MAX_GUESS = 15;
         // Contains the max time available to the player in milliseconds:
-        const MAX_TIME = 150000;
+        const MAX_TIME = 150;
     
     /*----- State variables -----*/
         // Array of rows on the card grid used to determine if a card is face-up or not.
@@ -40,9 +40,10 @@ console.log('Live server test.');
         let didGmStrt;
         // Cached HTML element that is the active card or active card status.
         let actvCrd;
-        // NUmber which stores remaining time.
+        // Number which stores remaining time.
         let remTime;
-  
+        // Is the interval id.
+        let tmrInt;
 
     /*----- Cached elements  -----*/
         // Card grid elements:
@@ -50,7 +51,7 @@ console.log('Live server test.');
         // Restart button:
         const rstrtBtn = document.getElementById('restart');
         // Timer element:
-        const tmr = document.getElementById('tmr-txt');
+        const tmrEl = document.getElementById('tmr-txt');
         // Message element:
         const msgEl = document.querySelector('h1');
         // Remaining guesses element:
@@ -140,10 +141,10 @@ console.log('Live server test.');
                     ];
                     // Set remaining guesses to max guesses:
                     remGuess = MAX_GUESS;
-                    // Sets timer:
-                    timer();
                     // Sets game start variable to true:
                     didGmStrt = true;
+                    // Sets timer:
+                    tmrInt = setInterval(timer,1000);
                     // Set message element's text to "GAME START!" :
                     msgEl.innerText = 'GAME START!';
                     // Re-renders game state while cards are face down:
@@ -165,6 +166,9 @@ console.log('Live server test.');
             crdReset();
             // Sets the active card to 0 to show that there is no active card:
             actvCrd = 0;
+            // Sets the remaining time to the max time and clears tmrInt:
+            tmrInt;
+            remTime = MAX_TIME;
             // Sets the variable which tracks if the game has started to false:
             didGmStrt = false;
             // Sets the card grid to a random placement of 24 cards containing 12 matches:
@@ -195,12 +199,11 @@ console.log('Live server test.');
         evt.target.style.display = 'none';
         /* Initializes game after start is pressed: */
         init();
-
-        /* --REMOVE ON FINAL VERSION-- After-initialization tests and logs: */
-        console.log(crdGrid);
     }
 
     function rstrt(evt) {
+        /* Hides the restart button: */
+        evt.target.style.visibility = 'hidden';
         /* Re-initializes the game after re-start is pressed: */
         init();
     }
@@ -229,9 +232,6 @@ console.log('Live server test.');
                 actvCrd = 0;
                 /* Sets message element's text to "MATCH!": */
                 msgEl.innerText = 'MATCH!';
-
-                /* --REMOVE ON FINAL VERSION-- Match console log: */
-                console.log('Match!');
             } else {
                 /* Subtracts 1 from remaining guesses: */
                 remGuess -= 1;
@@ -239,10 +239,7 @@ console.log('Live server test.');
                 msgEl.innerText = 'Incorrect. Guess again.';
                 /* Re-renders the remaining guesses: */
                 renderAtmps();
-
-                /* --REMOVE ON FINAL VERSION-- Match console log: */
-                console.log('No Match!');
-
+                /* Waits 1.5 seconds before setting both cards face-down: */
                 setTimeout(() => {
                     // Sets the active card to 0 signifying that there are no active cards:
                     actvCrd = 0;
@@ -254,14 +251,11 @@ console.log('Live server test.');
                     renderCrdGrid();
                 }, 1500);
             }
-
-            /* --REMOVE ON FINAL VERSION-- Active card index, type and visibility: */
-            console.log(`Row: ${actvRowIdx} | Column: ${actvColIdx} | Card Visibility: ${crdGridVis[actvRowIdx][actvColIdx]} | Card Type: ${actvCrdTyp}`);
         }
 
         /* hdlClick() function. */
         function hdlClick(evt) {
-            if (evt.target.id !== 'card-grid' && didGmStrt === true) {
+            if (evt.target.id !== 'card-grid' && didGmStrt === true && !lossCheck()) {
                 // Creates an array of the event target's id string:
                 let idArr = [...evt.target.id];
                 // Sets the row index equal to that contained in the id:
@@ -295,9 +289,6 @@ console.log('Live server test.');
                     checkMatch(crdTyp,rowIdx,colIdx);
                 }
                 winCheck();
-
-                /* --REMOVE ON FINAL VERSION-- Event target index, type, and visibility: */
-                console.log(`Row: ${rowIdx} | Column: ${colIdx} | Card Visibility: ${crdVis} | Card Type: ${crdTyp}`);
             }
         }
 
@@ -319,16 +310,37 @@ console.log('Live server test.');
 
         /* winCheck() function. */
         function winCheck() {
+            // If the player has won, onWin() will be called:
             if (grdCheck()) {
                 onWin();
-            } else {
-                lossCheck();
+            // If the player has lost, onLoss() will be called:
+            } else if (lossCheck()) {
+                onLose();
+                clearInterval(tmrInt);
             }
         }
 
         /* timer() function. */
         function timer() {
-
+            // Initializes two variables:
+            let remMin;
+            let remSec;
+            // Sets the remaining minutes equal to remaining time divided by 60 floored:
+            remMin=Math.floor(remTime/60);
+            // Sets remaining seconds as the remainder of remaining time divided by 60:
+            remSec=remTime%60;
+            // Subtracts 1 second from remaining time:
+            remTime-=1;
+            // Decides which text to display depending on the remaining seconds:
+            if (remSec >= 10) {
+                /* Displays only remMin and remSec: */
+                tmrEl.innerText = ` ${remMin}:${remSec}`;
+            } else if (remSec < 10) {
+                /* Displays remMin and a zero before remSec: */
+                tmrEl.innerText = ` ${remMin}:0${remSec}`;
+            }
+            // Checks if the time has expired and calls winCheck() depending on result:
+            if (remTime <= -1) winCheck()
         }
 
         /* lossCheck() helper functions. */
@@ -341,8 +353,9 @@ console.log('Live server test.');
 
         /* lossCheck() function. */
         function lossCheck() {
-            if (remGuess <= 0 || remTime <= 0) {
-                onLose();
+            // If either the remaining guesses is 0 or the time has expired, returns true:
+            if (remGuess <= 0 || remTime <= -1) {
+                return true;
             }
         }
         
@@ -379,11 +392,11 @@ console.log('Live server test.');
         }
 
         function renderCtrls() {
-            if (!grdCheck()) {
+            if (!grdCheck() && !lossCheck()) {
                 /* Changes restart button from display:none to visibility:hidden: */
                 rstrtBtn.style.visibility = 'hidden';
                 rstrtBtn.style.display = 'block';
-            } else if (grdCheck() || lossCheck()) {
+            } else if ((grdCheck() || lossCheck()) && didGmStrt) {
                 /* Changes restart button from hidden to visible: */
                 rstrtBtn.style.visibility = 'visible';
             }
