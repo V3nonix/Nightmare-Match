@@ -15,6 +15,31 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: var(--color-txt);
+}
+
+header {
+    font-size: 5vmin;
+}
+
+h1 {
+    font-size: 3vmin;
+}
+
+#restart {
+    display: none;
+}
+
+#timer-els {
+    display: flex;
+    margin: 1vmin;
+    visibility: hidden;
+
+}
+
+#timer-els > p {
+    margin: 5vmin;
 }
 
 #card-grid {
@@ -26,6 +51,13 @@ body {
 
 #card-grid > div {
     border: 0.1vmin solid var(--color-border);
+
+}
+
+#card-grid > div:hover {
+    transform: scale(1.15);
+    transition: transform 150ms ease-in;
+    
 }
 
 

@@ -5,57 +5,66 @@ console.log('Live server test.');
 // Memory Match:
 
     /*----- Constants -----*/
-    // Contains the reference value and class name key value pairs:
-    const CARD_TYPE = {
-        'a': 'crd-type-1',
-        'b': 'crd-type-2',
-        'c': 'crd-type-3',
-        'd': 'crd-type-4',
-        'e': 'crd-type-5',
-        'f': 'crd-type-6',
-        'g': 'crd-type-7',
-        'h': 'crd-type-8',
-        'i': 'crd-type-9',
-        'j': 'crd-type-10',
-        'k': 'crd-type-11',
-        'l': 'crd-type-12',     
-    };
-    // Contains the keys for the class names stored as values in the object above:
-    const CARD_REF = ['a','b','c','d','e','f','g','h','i','j','k','l'];
-    // Contains the max number of guess attempts available to the player:
-    const MAX_GUESS = 10;
+        // Contains the reference value and class name key value pairs:
+        const CARD_TYPE = {
+            'a': 'crd-type-1',
+            'b': 'crd-type-2',
+            'c': 'crd-type-3',
+            'd': 'crd-type-4',
+            'e': 'crd-type-5',
+            'f': 'crd-type-6',
+            'g': 'crd-type-7',
+            'h': 'crd-type-8',
+            'i': 'crd-type-9',
+            'j': 'crd-type-10',
+            'k': 'crd-type-11',
+            'l': 'crd-type-12',     
+        };
+        // Contains the keys for the class names stored as values in the object above:
+        const CARD_REF = ['a','b','c','d','e','f','g','h','i','j','k','l'];
+        // Contains the max number of guess attempts available to the player:
+        const MAX_GUESS = 15;
+        // Contains the max time available to the player in milliseconds:
+        const MAX_TIME = 150000;
     
     /*----- State variables -----*/
-    // Array of rows on the card grid used to determine if a card is face-up or not.
-    let crdGridVis;
-    // Array of rows on the card grid used to store card type.
-    let crdGrid;
-    // Number which stores max guesses.
-    let remGuess;
-    // String which stores win/loss.
-    let rslt;
-    // Boolean which stores if game has started yet.
-    let didGmStrt;
-    // Cached HTML element that is the active card or active card status.
-    let actvCrd;
+        // Array of rows on the card grid used to determine if a card is face-up or not.
+        let crdGridVis;
+        // Array of rows on the card grid used to store card type.
+        let crdGrid;
+        // Number which stores max guesses.
+        let remGuess;
+        // String which stores win/loss.
+        let rslt;
+        // Boolean which stores if game has started yet.
+        let didGmStrt;
+        // Cached HTML element that is the active card or active card status.
+        let actvCrd;
+        // NUmber which stores remaining time.
+        let remTime;
   
 
     /*----- Cached elements  -----*/
-    // Card grid elements:
-    const crdEls = [...document.querySelectorAll('#card-grid > div')];
-    // Restart button:
-    // Timer element:
-    // Message element:
-    const msgEl = document.querySelector('h1');
-    // (Stretch goal) Animated element(s):
+        // Card grid elements:
+        const crdEls = [...document.querySelectorAll('#card-grid > div')];
+        // Restart button:
+        const rstrtBtn = document.getElementById('restart');
+        // Timer element:
+        const tmr = document.getElementById('tmr-txt');
+        // Message element:
+        const msgEl = document.querySelector('h1');
+        // Remaining guesses element:
+        const remGuessEl = document.getElementById('guess-txt');
+        // (Stretch goal) Animated element(s):
 
     /*----- Event listeners -----*/
-    // Start button event listener:
-    document.getElementById('start').addEventListener('click',strt);
-    // Card grid elements event listener:
-    document.getElementById('card-grid').addEventListener('click',hdlClick);
-    // Restart button event listener:
-    // Timer element event listener:
+        // Start button event listener:
+        document.getElementById('start').addEventListener('click',strt);
+        // Card grid elements event listener:
+        document.getElementById('card-grid').addEventListener('click',hdlClick);
+        // Restart button event listener:
+        rstrtBtn.addEventListener('click',rstrt)
+        // Timer element event listener:
 
     /*----- Functions -----*/
 
@@ -183,7 +192,7 @@ console.log('Live server test.');
     
     function strt(evt) {
         /* Hides the start button: */
-        evt.target.style.visibility = 'hidden';
+        evt.target.style.display = 'none';
         /* Initializes game after start is pressed: */
         init();
 
@@ -191,7 +200,10 @@ console.log('Live server test.');
         console.log(crdGrid);
     }
 
-
+    function rstrt(evt) {
+        /* Re-initializes the game after re-start is pressed: */
+        init();
+    }
 
     // State Change functions:
 
@@ -225,6 +237,8 @@ console.log('Live server test.');
                 remGuess -= 1;
                 /* Sets message element's text to "Incorrect. Guess again.": */
                 msgEl.innerText = 'Incorrect. Guess again.';
+                /* Re-renders the remaining guesses: */
+                renderAtmps();
 
                 /* --REMOVE ON FINAL VERSION-- Match console log: */
                 console.log('No Match!');
@@ -289,25 +303,48 @@ console.log('Live server test.');
 
     // State Check functions:
 
-        /* winCheck() auxiliary function. */
-
+        /* State check auxiliary function. */
+        function grdCheck() {
+           let crdGridChk = crdGridVis.flat();
+           return crdGridChk.every(val => val === 1);
+        }
+    
         /* winCheck() helper functions. */
+        function onWin() {
+            // Re-renders the entire game:
+            render();
+            // Sets message element's text to "YOU WIN!" : 
+            msgEl.innerText = 'YOU WIN!';
+        }
 
         /* winCheck() function. */
         function winCheck() {
-
+            if (grdCheck()) {
+                onWin();
+            } else {
+                lossCheck();
+            }
         }
 
         /* timer() function. */
         function timer() {
 
         }
- 
-        /* lossCheck() auxiliary function. */
 
         /* lossCheck() helper functions. */
+        function onLose() {
+            // Re-renders the entire game:
+            render();
+            // Sets message element's text to "YOU LOSE!" :
+            msgEl.innerText = 'YOU LOSE!';
+        }
 
         /* lossCheck() function. */
+        function lossCheck() {
+            if (remGuess <= 0 || remTime <= 0) {
+                onLose();
+            }
+        }
         
     // Render functions:
 
@@ -341,24 +378,38 @@ console.log('Live server test.');
             })
         }
 
-        function renderMsg() {
-        
+        function renderCtrls() {
+            if (!grdCheck()) {
+                /* Changes restart button from display:none to visibility:hidden: */
+                rstrtBtn.style.visibility = 'hidden';
+                rstrtBtn.style.display = 'block';
+            } else if (grdCheck() || lossCheck()) {
+                /* Changes restart button from hidden to visible: */
+                rstrtBtn.style.visibility = 'visible';
+            }
         }
 
-        function renderCtrls() {
-
+        function renderAtmps() {
+            // Displayes the remaining guesses available to the player:
+            remGuessEl.innerText = ` ${remGuess} guesses.`
         }
 
         function renderTmr() {
-
+            if (didGmStrt) {
+                // Makes the timer elements visible:
+                document.getElementById('timer-els').style.visibility = 'visible';
+            } else if (!didGmStrt) {
+                // Makes the timer elements hidden:
+                document.getElementById('timer-els').style.visibility = 'hidden';
+            }
         }
 
         /* render() function. */
         function render() {
             renderCrdGrid();
-            renderMsg();
             renderCtrls();
             renderTmr();
+            renderAtmps();
         }
 
 // Notes:
