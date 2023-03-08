@@ -126,7 +126,7 @@ console.log('Live server test.');
                         n -= 1;
                     } else {
                         /* If there is not yet a matching value, adds to the end of array: */
-                        arrCrdRes.push(val)
+                        arrCrdRes.push(val);
                     };
                 }
                 /* Uses this helper function to split original array into four arrays for each row then returns result: */
@@ -217,7 +217,7 @@ console.log('Live server test.');
     // State Change functions:
 
         /* hdlClick() helper functions. */
-        function checkMatch(crdTyp,rowIdx,colIdx) {
+        function checkMatch(crdTyp,rowIdx,colIdx,evt) {
             // Creates an array of the active card's id string:
             actvIdArr = [...actvCrd.id];
             // Sets the active row index equal to that contained in the id:
@@ -228,35 +228,44 @@ console.log('Live server test.');
             actvCrdTyp = crdGrid[actvRowIdx][actvColIdx];
             // Sets the active card to 1 signifying that the active card is being compared.
             actvCrd = 1;
-            // Sets the active card to face-up: 
-            crdGridVis[rowIdx].splice(colIdx,1,1);
-            // Re-renders the card grid:
-            renderCrdGrid();
-            // Determines if active and selected card match:
-            if (actvCrdTyp === crdTyp) {
-                /* Sets the active card to 0 signifying that there are no active cards: */
-                actvCrd = 0;
-                /* Sets message element's text to "MATCH!": */
-                msgEl.innerText = 'MATCH!';
-            } else {
-                /* Subtracts 1 from remaining guesses: */
-                remGuess -= 1;
-                /* Sets message element's text to "Incorrect. Guess again.": */
-                msgEl.innerText = 'Incorrect. Guess again.';
-                /* Re-renders the remaining guesses: */
-                renderAtmps();
-                /* Waits 1.5 seconds before setting both cards face-down: */
-                setTimeout(() => {
-                    // Sets the active card to 0 signifying that there are no active cards:
+            // Plays card flip animation for event target:
+            crdFlip(evt.target);
+            // Sets the selected card to face-up: 
+            setTimeout(() => {
+                crdGridVis[rowIdx].splice(colIdx,1,1);
+                /* Re-renders the card grid: */
+                renderCrdGrid();
+                /* Determines if active and selected card match: */
+                if (actvCrdTyp === crdTyp) {
+                    /* Sets the active card to 0 signifying that there are no active cards: */
                     actvCrd = 0;
-                    // Sets the active card face-down:
-                    crdGridVis[actvRowIdx].splice(actvColIdx,1,0);
-                    // Sets the selected card face-down:
-                    crdGridVis[rowIdx].splice(colIdx,1,0);
-                    // Re-renders the card grid:
-                    renderCrdGrid();
-                }, 1500);
-            }
+                    /* Sets message element's text to "MATCH!": */
+                    msgEl.innerText = 'MATCH!';
+                    /* Checks for win: */
+                    winCheck();
+                } else {
+                    /* Subtracts 1 from remaining guesses: */
+                    remGuess -= 1;
+                    /* Sets message element's text to "Incorrect. Guess again.": */
+                    msgEl.innerText = 'Incorrect. Guess again.';
+                    /* Re-renders the remaining guesses: */
+                    renderAtmps();
+                    /* Waits 1.5 seconds before setting both cards face-down: */
+                    setTimeout(() => {
+                        // Sets the active card to 0 signifying that there are no active cards:
+                        actvCrd = 0;
+                        // Sets the active card face-down:
+                        crdGridVis[actvRowIdx].splice(actvColIdx,1,0);
+                        // Sets the selected card face-down:
+                        crdGridVis[rowIdx].splice(colIdx,1,0);
+                        // Re-renders the card grid:
+                        renderCrdGrid();
+                        // Checks for win:
+                        winCheck();
+                    }, 1500);
+                }
+            },250);
+
         }
 
         /* hdlClick() function. */
@@ -284,17 +293,22 @@ console.log('Live server test.');
                         // Returns because the selected card is already face-up:
                         return;
                     } else {
+                        // Plays card flip animation for event target:
+                        crdFlip(evt.target);
                         // Sets the selected card to face-up:
-                        crdGridVis[rowIdx].splice(colIdx,1,1);
-                        // Sets the selected card to the active card:
-                        actvCrd = evt.target;
-                        // Re-renders the card grid:
-                        renderCrdGrid();
+                        setTimeout(() => {
+                            crdGridVis[rowIdx].splice(colIdx,1,1);
+                            // Sets the selected card to the active card:
+                            actvCrd = evt.target;
+                            // Re-renders the card grid:
+                            renderCrdGrid();
+                            // Checks for win:
+                            winCheck();
+                        },250);
                     }
                 } else {
-                    checkMatch(crdTyp,rowIdx,colIdx);
+                    checkMatch(crdTyp,rowIdx,colIdx,evt);
                 }
-                winCheck();
             }
         }
 
@@ -458,4 +472,26 @@ console.log('Live server test.');
             renderAtmps();
         }
 
+    // Animation functions:
+
+        /* crdFlip() function. */
+        function crdFlip(target) {
+            target.style.transitionDuration = '300ms';
+            target.style.transform = 'rotateY(90deg)';
+            setTimeout(() => {
+            target.style.transform = 'none';
+            }, 300)
+        }
+
 // Notes:
+
+/*                         setTimeout(() => {
+                            // Sets the active card face-down: 
+                            crdGridVis[actvRowIdx].splice(actvColIdx,1,0);
+                            // Sets the selected card face-down: 
+                            crdGridVis[rowIdx].splice(colIdx,1,0);
+                            // Re-renders the card grid: 
+                            renderCrdGrid();
+                            // Checks for win: 
+                            winCheck(); 
+*/
