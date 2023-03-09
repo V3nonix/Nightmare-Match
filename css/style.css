@@ -69,73 +69,73 @@ h1 {
 /* Card type classes: */
 
 .a {
-    background-image: url('/images/CardA.png');
+    background-image: url('../images/CardA.png');
     background-size: cover;
     background-position: center center;
 }
 
 .b {
-    background-image: url('/images/CardB.png');
+    background-image: url('../images/CardB.png');
     background-size: cover;
     background-position: center center;
 }
 
 .c {
-    background-image: url('/images/CardC.png');
+    background-image: url('../images/CardC.png');
     background-size: cover;
     background-position: center center;
 }
 
 .d {
-    background-image: url('/images/CardD.png');
+    background-image: url('../images/CardD.png');
     background-size: cover;
     background-position: center center;
 }
 
 .e {
-    background-image: url('/images/CardE.png');
+    background-image: url('../images/CardE.png');
     background-size: cover;
     background-position: center center;
 }
 
 .f {
-    background-image: url('/images/CardF.jpg');
+    background-image: url('../images/CardF.jpg');
     background-size: cover;
     background-position: center center;
 }
 
 .g {
-    background-image: url('/images/CardG.png');
+    background-image: url('../images/CardG.png');
     background-size: cover;
     background-position: center center;
 }
 
 .h {
-    background-image: url('/images/CardH.png');
+    background-image: url('../images/CardH.png');
     background-size: cover;
     background-position: center center;
 }
 
 .i {
-    background-image: url('/images/CardI.png');
+    background-image: url('../images/CardI.png');
     background-size: cover;
     background-position: center center;
 }
 
 .j {
-    background-image: url('/images/CardJ.png');
+    background-image: url('../images/CardJ.png');
     background-size: cover;
     background-position: center center;
 }
 
 .k {
-    background-image: url('/images/CardK.png');
+    background-image: url('../images/CardK.png');
     background-size: cover;
     background-position: center center;
 }
 
 .l {
-    background-image: url('/images/CardL.png');
+    background-image: url('../images/CardL.png');
     background-size: cover;
     background-position: center center;
 }
@@ -143,7 +143,7 @@ h1 {
 /* Card visibility classes: */
 
 .not-vis {
-    background-image: url('/images/CardFaceDown.png');
+    background-image: url('../images/CardFaceDown.png');
     background-size: cover;
     background-position: center center;
 }
