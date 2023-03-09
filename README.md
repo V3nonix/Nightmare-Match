@@ -2,7 +2,7 @@
 ## SEI-Project1-MemoryMatch
 
 ### Screenshots:
-[Nightmare Match start-page.] (RM-images/Screenshot1.png "Start-page Screenshot")
+[Nightmare Match start-page.] (/RM-images/Screenshot1.png "Start-page Screenshot")
 
 ### Technologies Used:
 This project utilizes JavaScript, HTML, and CSS.
