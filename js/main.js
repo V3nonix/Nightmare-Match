@@ -338,11 +338,11 @@ console.log('Live server test.');
 
         /* winCheck() function. */
         function winCheck() {
-            // If the player has won, onWin() will be called:
+            // If the player has won, onWin() will be called and the timer will end:
             if (grdCheck()) {
                 onWin();
                 clearInterval(tmrInt);
-            // If the player has lost, onLoss() will be called:
+            // If the player has lost, onLoss() will be called and the timer will end:
             } else if (lossCheck()) {
                 onLose();
                 clearInterval(tmrInt);
@@ -482,16 +482,3 @@ console.log('Live server test.');
             target.style.transform = 'none';
             }, 300)
         }
-
-// Notes:
-
-/*                         setTimeout(() => {
-                            // Sets the active card face-down: 
-                            crdGridVis[actvRowIdx].splice(actvColIdx,1,0);
-                            // Sets the selected card face-down: 
-                            crdGridVis[rowIdx].splice(colIdx,1,0);
-                            // Re-renders the card grid: 
-                            renderCrdGrid();
-                            // Checks for win: 
-                            winCheck(); 
-*/

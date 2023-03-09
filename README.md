@@ -1,6 +1,24 @@
-# SEI-Project1-MemoryMatch
+#Nightmare Match
+## SEI-Project1-MemoryMatch
 
-    This is a memory match game. In the MVP version, the player will have a maximum number of guesses and a countdown timer. There will be twenty-four cards, six in four rows, with twelve matching pairs. These cards will start face-up, and will stay that way for three seconds, after which, they will be set face-down. 
-  When a card is clicked on, one of three things will happen. One: In the event that there are no other selected cards, the selected card will be shown face-up, setting it to active. In the event that a card is already active, the selected card will be compared to the active card and shown face-up for 2 seconds, resulting in one of the two other outcomes. Two: If the active and selected card match, both will be set face-up for the remainder of the game. Three: If they do not match, both cards will be set face down and the player will lose one of the maximum guesses. 
-  The player will have two minutes and thirty seconds to match all cards. Upon the countdown's completion, if all cards have not been matched, the player will lose. If the player uses all of there maximum guesses and all cards have not been matched, the player will lose. Otherwise, the player wins. 
-  Once a player wins, a button will appear, giving the player the option to reset the game, and play again.
+### Screenshots:
+file:/RM-images/Screenshot1.png
+
+### Technologies Used:
+This project utilizes JavaScript, HTML, and CSS.
+### Getting Started:
+
+  **INSTRUCTIONS:**
+
+  This is a memory match game, where the cards slightly resemble playing cards. The game includes twenty-four cards total divided into four rows of six cards. The goal of this game is to match the twelve matching pairs within the allotted time and without going over the maximum allowed guesses. Once the game is started by clicking the start button, the memorization phase will begin. All cards will be placed face-up and will stay that way for three seconds, after which, they will be set face-down. 
+  
+  After the memorization phase, comes the matching phase, where the player can click on any face-down card. Once such a card is clicked, it will be set face up, becoming the active card, and the player will have to select its match. If the player clicks on a card that does not match, both the active card and the newly selected card will remain face-up for 1.5 seconds before being set face-down. The player will be unable to choose other cards before the cards reset as a punishment for choosing incorrectly and the player will lose one of their remaining guesses. If the player chose correctly, both cards will remain face-up for the duration of the game.
+
+  Upon winning the game, the player will receive their score and a button allowing the player to play again will appear. The score is calculated as the amount of remaining time in seconds multiplied by the number of remaining guesses. Upon losing the game, the restart button will appear, but given the score is zero, it will not be displayed.  
+
+  **OTHER INFORMATION:**
+
+  There is currently a deployed version of this game located at the following link.
+
+  *LINK:*
+

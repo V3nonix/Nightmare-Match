@@ -48,6 +48,7 @@ h1 {
 
 #display-els > p {
     margin: 3vmin;
+    font-size: 2vmin;
 }
 
 #card-grid {
@@ -68,90 +69,80 @@ h1 {
 /* Card type classes: */
 
 .a {
-    background-color: red;
     background-image: url('/images/CardA.png');
     background-size: cover;
     background-position: center center;
 }
 
 .b {
-    background-color: rgb(255, 106, 0);
     background-image: url('/images/CardB.png');
     background-size: cover;
     background-position: center center;
 }
 
 .c {
-    background-color: orange;
     background-image: url('/images/CardC.png');
     background-size: cover;
     background-position: center center;
 }
 
 .d {
-    background-color: yellow;
     background-image: url('/images/CardD.png');
     background-size: cover;
     background-position: center center;
 }
 
 .e {
-    background-color: yellowgreen;
     background-image: url('/images/CardE.png');
     background-size: cover;
     background-position: center center;
 }
 
 .f {
-    background-color: green;
     background-image: url('/images/CardF.jpg');
     background-size: cover;
     background-position: center center;
 }
 
 .g {
-    background-color: cadetblue;
     background-image: url('/images/CardG.png');
     background-size: cover;
     background-position: center center;
 }
 
 .h {
-    background-color: blue;
     background-image: url('/images/CardH.png');
     background-size: cover;
     background-position: center center;
 }
 
 .i {
-    background-color: blueviolet;
     background-image: url('/images/CardI.png');
     background-size: cover;
     background-position: center center;
 }
 
 .j {
-    background-color: purple;
     background-image: url('/images/CardJ.png');
     background-size: cover;
     background-position: center center;
 }
 
 .k {
-    background-color: indigo;
     background-image: url('/images/CardK.png');
     background-size: cover;
     background-position: center center;
 }
 
 .l {
-    background-color: black;
+    background-image: url('/images/CardL.png');
+    background-size: cover;
+    background-position: center center;
 }
 
 /* Card visibility classes: */
 
 .not-vis {
-    background-color: black;
     background-image: url('/images/CardFaceDown.png');
     background-size: cover;
     background-position: center center;
