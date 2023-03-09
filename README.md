@@ -1,8 +1,8 @@
-#Nightmare Match
+# Nightmare Match
 ## SEI-Project1-MemoryMatch
 
 ### Screenshots:
-file:/RM-images/Screenshot1.png
+[Nightmare Match start-page.] (RM-images/Screenshot1.png "Start-page Screenshot")
 
 ### Technologies Used:
 This project utilizes JavaScript, HTML, and CSS.
