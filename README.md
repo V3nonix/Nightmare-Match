@@ -20,5 +20,5 @@ This project utilizes JavaScript, HTML, and CSS.
 
   There is currently a deployed version of this game located at the following link.
 
-  *LINK:*
+  *LINK:* https://v3nonix.github.io/Nightmare-Match/
 
