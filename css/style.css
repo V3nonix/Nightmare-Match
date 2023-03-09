@@ -139,6 +139,9 @@ h1 {
 
 .k {
     background-color: indigo;
+    background-image: url('/images/CardK.png');
+    background-size: cover;
+    background-position: center center;
 }
 
 .l {
