@@ -78,6 +78,7 @@ console.log('Live server test.');
         /* init() auxiliary functions. */
         function bttrRandom(n) {
             // Create a better random function so that there are less matches placed in a row.
+            /* ICEBOX feature to be added at a later date. */
         }
 
         /* init() helper functions. */

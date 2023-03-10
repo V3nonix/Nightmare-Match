@@ -30,14 +30,21 @@ h1 {
 
 #start {
     background-color: var(--color-aux);
-    height: 3vmin;
+    font-size: 2vmin;
     color: var(--color-txt); 
+    @media (max-width: 600px) {
+        font-size: 1vmin;
+    }
 }
 
 #restart {
     background-color: var(--color-aux);
+    font-size: 2vmin;
     color: var(--color-txt);
     display: none;
+    @media (max-width: 600px) {
+        font-size: 1vmin;
+    }
 }
 
 #display-els {
